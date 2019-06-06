@@ -5,10 +5,7 @@ const EventList = ({events}) => {
   return (
     <div>
       <h1>Event List</h1>
-      <EventListItem />
-      <EventListItem />
-      <EventListItem />
-      <EventListItem />
+      {events.map(event => <EventListItem key={event.id} event={event}/>)}
     </div>
   );
 }
