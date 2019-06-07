@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Button, Grid, GridColumn} from 'semantic-ui-react';
 import EventList from '../EventList/EventList';
 import EventForm from '../EventForm/EventForm';
 
-const events = [
+const _events = [
   {
     id: '1',
     title: 'Trip to Tower of London',
@@ -56,14 +56,18 @@ const events = [
 
 
 const EventDashboard = () => {
+  const [events, setEvents] = React.useState(_events);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const handleToggleIsOpen = () => setIsOpen(prevState => !prevState);
+
   return (
     <Grid>
       <GridColumn width="10">
         <EventList events={events}/>
       </GridColumn>
       <GridColumn width="6">
-        <Button positive content="Create Event" />
-        <EventForm/>
+        <Button positive content="Create Event" onClick={handleToggleIsOpen} />
+        {isOpen && <EventForm cancelFormOpen={handleToggleIsOpen}/>}
       </GridColumn>
     </Grid>
   );
