@@ -9,7 +9,7 @@ const initialState = {
   hostedBy: ''
 };
 
-const EventForm = ({selectedEvent, cancelFormOpen, createEvent}) => {
+const EventForm = ({selectedEvent, cancelFormOpen, createEvent, updateEvent}) => {
   const [event, setEvent] = React.useState(initialState);
 
   React.useEffect(() => {
@@ -26,7 +26,11 @@ const EventForm = ({selectedEvent, cancelFormOpen, createEvent}) => {
 
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
-    createEvent(event);
+    if (event.id) {
+      updateEvent(event);
+    } else {
+      createEvent(event);
+    }
   }
 
   return (

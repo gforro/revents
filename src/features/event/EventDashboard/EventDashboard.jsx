@@ -80,14 +80,34 @@ const EventDashboard = () => {
     setIsOpen(true);
   }
 
+  const handleUpdateEvent = (updatedEvent) => {
+    setEvents(prevEvents => prevEvents.map(event => {
+        if (event.id === updatedEvent.id) {
+          return {...updatedEvent};
+        } else {
+          return event;
+        }
+      }));
+    setIsOpen(false);
+    setSelectedEvent(null);
+  }
+
+  const handleDeleteEvent = (eventId) => {
+    setEvents(prevEvents => prevEvents.filter(e => e.id !== eventId));
+    if (selectedEvent && eventId === selectedEvent.id) {
+      setSelectedEvent(null);
+      setIsOpen(false);
+    }
+  }
+
   return (
     <Grid>
       <GridColumn width="10">
-        <EventList events={events} selectEvent={handleSelectEvent}/>
+        <EventList events={events} selectEvent={handleSelectEvent} deleteEvent={handleDeleteEvent}/>
       </GridColumn>
       <GridColumn width="6">
         <Button positive content="Create Event" onClick={handleCreateFormOpen} />
-        {isOpen && <EventForm selectedEvent={selectedEvent} cancelFormOpen={handleFormCancel} createEvent={handleCreateEvent}/>}
+        {isOpen && <EventForm selectedEvent={selectedEvent} cancelFormOpen={handleFormCancel} createEvent={handleCreateEvent} updateEvent={handleUpdateEvent}/>}
       </GridColumn>
     </Grid>
   );
