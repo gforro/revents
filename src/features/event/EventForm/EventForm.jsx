@@ -1,14 +1,21 @@
 import React from 'react';
 import {Button, Form, Segment} from 'semantic-ui-react';
 
-const EventForm = ({cancelFormOpen, createEvent}) => {
-  const [event, setEvent] = React.useState({
-    title: '',
-    date: '',
-    city: '',
-    venue: '',
-    hostedBy: ''
-  });
+const initialState = {
+  title: '',
+  date: '',
+  city: '',
+  venue: '',
+  hostedBy: ''
+};
+
+const EventForm = ({selectedEvent, cancelFormOpen, createEvent}) => {
+  const [event, setEvent] = React.useState(initialState);
+
+  React.useEffect(() => {
+      setEvent({...(selectedEvent || initialState)});
+      console.log('### hook effect selected event set', selectedEvent)
+    }, [selectedEvent]);
 
   const handleInputChange = ({target: {name, value}}) => {
     setEvent(prevEvent => ({

@@ -8,7 +8,7 @@ const _events = [
   {
     id: '1',
     title: 'Trip to Tower of London',
-    date: '2018-03-27T11:00:00+00:00',
+    date: '2018-03-27',
     category: 'culture',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.',
@@ -32,7 +32,7 @@ const _events = [
   {
     id: '2',
     title: 'Trip to Punch and Judy Pub',
-    date: '2018-03-28T14:00:00+00:00',
+    date: '2018-03-28',
     category: 'drinks',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.',
@@ -59,8 +59,14 @@ const _events = [
 const EventDashboard = () => {
   const [events, setEvents] = React.useState(_events);
   const [isOpen, setIsOpen] = React.useState(false);
+  const [selectedEvent, setSelectedEvent] = React.useState(null);
 
-  const handleToggleIsOpen = () => setIsOpen(prevState => !prevState);
+  const handleFormCancel = () => setIsOpen(false);
+
+  const handleCreateFormOpen = () => {
+    setIsOpen(true);
+    setSelectedEvent(null);
+  }
 
   const handleCreateEvent = (newEvent) => {
     newEvent.id = cuid();
@@ -69,14 +75,19 @@ const EventDashboard = () => {
     setIsOpen(false);
   };
 
+  const handleSelectEvent = (event) => {
+    setSelectedEvent(event);
+    setIsOpen(true);
+  }
+
   return (
     <Grid>
       <GridColumn width="10">
-        <EventList events={events}/>
+        <EventList events={events} selectEvent={handleSelectEvent}/>
       </GridColumn>
       <GridColumn width="6">
-        <Button positive content="Create Event" onClick={handleToggleIsOpen} />
-        {isOpen && <EventForm cancelFormOpen={handleToggleIsOpen} createEvent={handleCreateEvent}/>}
+        <Button positive content="Create Event" onClick={handleCreateFormOpen} />
+        {isOpen && <EventForm selectedEvent={selectedEvent} cancelFormOpen={handleFormCancel} createEvent={handleCreateEvent}/>}
       </GridColumn>
     </Grid>
   );
