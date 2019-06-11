@@ -1,21 +1,11 @@
 import React from 'react';
 import {Button, Form, Segment} from 'semantic-ui-react';
+import {connect} from 'react-redux';
+import {createEvent, updateEvent} from '../eventActions';
+import cuid from 'cuid';
 
-const initialState = {
-  title: '',
-  date: '',
-  city: '',
-  venue: '',
-  hostedBy: ''
-};
-
-const EventForm = ({selectedEvent, cancelFormOpen, createEvent, updateEvent}) => {
-  const [event, setEvent] = React.useState(initialState);
-
-  React.useEffect(() => {
-      setEvent({...(selectedEvent || initialState)});
-      console.log('### hook effect selected event set', selectedEvent)
-    }, [selectedEvent]);
+const EventForm = ({event: providedEvent, createEvent, updateEvent, history}) => {
+  const [event, setEvent] = React.useState(providedEvent);
 
   const handleInputChange = ({target: {name, value}}) => {
     setEvent(prevEvent => ({
@@ -28,8 +18,15 @@ const EventForm = ({selectedEvent, cancelFormOpen, createEvent, updateEvent}) =>
     evt.preventDefault();
     if (event.id) {
       updateEvent(event);
+      history.push(`/events/${event.id}`);
     } else {
-      createEvent(event);
+      const newEvent = {
+        ...event,
+        id: cuid(),
+        hostPhotoURL: '/assets/user.png'
+      };
+      createEvent(newEvent);
+      history.push('/events');
     }
   }
 
@@ -59,11 +56,33 @@ const EventForm = ({selectedEvent, cancelFormOpen, createEvent, updateEvent}) =>
         <Button positive type="submit">
           Submit
         </Button>
-        <Button type="button" onClick={cancelFormOpen}>Cancel</Button>
+        <Button type="button" onClick={history.goBack}>Cancel</Button>
       </Form>
     </Segment>
 
   );
 }
 
-export default EventForm;
+
+const mapState = (state, ownProps) => {
+  const eventId = ownProps.match.params.id;
+  let event = {
+    title: '',
+    date: '',
+    city: '',
+    venue: '',
+    hostedBy: ''
+  };
+
+  if (eventId && state.events.length > 0) {
+    event = state.events.filter(e => e.id === eventId)[0];
+  }
+  return { event }
+}
+
+const actions = {
+  createEvent,
+  updateEvent
+}
+
+export default connect(mapState, actions)(EventForm);
