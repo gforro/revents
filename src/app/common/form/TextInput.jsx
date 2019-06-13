@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, FormField, Label} from 'semantic-ui-react';
+import {FormField, Label} from 'semantic-ui-react';
 
 const TextInput = ({input, type, width, placeholder, meta: {touched, error}}) => {
   return (
