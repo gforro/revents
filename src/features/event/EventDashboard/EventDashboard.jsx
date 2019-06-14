@@ -4,6 +4,7 @@ import EventList from '../EventList/EventList';
 import {connect} from 'react-redux';
 import {deleteEvent} from '../eventActions';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
+import EventActivity from '../EventActivity/EventActivity';
 
 const EventDashboard = ({events, deleteEvent, loading}) => {
 
@@ -21,7 +22,7 @@ const EventDashboard = ({events, deleteEvent, loading}) => {
           <EventList events={events} deleteEvent={handleDeleteEvent}/>
         </GridColumn>
         <GridColumn width="6">
-          <h1>Activity Feed</h1>
+          <EventActivity/>
         </GridColumn>
       </Grid>
     );
