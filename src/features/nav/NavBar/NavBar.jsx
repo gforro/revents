@@ -28,11 +28,15 @@ class NavBar extends Component {
             Re-vents
           </Menu.Item>
           <Menu.Item as={NavLink} to='/events' exact name="Events" />
-          <Menu.Item as={NavLink} to='/people' name="People" />
-          <Menu.Item as={NavLink} to='/test' name="Test" />
-          <Menu.Item as={Link} to='/createEvent'>
-            <Button floated="right" positive inverted content="Create Event" />
-          </Menu.Item>
+          {authenticated &&
+            <>
+              <Menu.Item as={NavLink} to='/people' name="People"/>
+              <Menu.Item as={NavLink} to='/test' name="Test"/>
+              <Menu.Item as={Link} to='/createEvent'>
+                <Button floated="right" positive inverted content="Create Event"/>
+              </Menu.Item>
+            </>
+          }
           {authenticated ? <SignedInMenu signOut={this.handleSignOut} currentUser={currentUser} /> : <SignedOutMenu signIn={this.handleSignIn} register={this.handleRegister}/> }
         </Container>
       </Menu>
