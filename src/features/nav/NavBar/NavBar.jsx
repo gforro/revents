@@ -4,14 +4,17 @@ import {Link, NavLink} from 'react-router-dom';
 import SignedInMenu from '../Menus/SignedInMenu';
 import SignedOutMenu from '../Menus/SignedOutMenu';
 import {withRouter} from 'react-router-dom';
+import {logout} from '../../auth/authActions';
+import {connect} from 'react-redux';
+import {openModal} from '../../modals/modalActions';
 
-const NavBar = ({history}) => {
-  const [authenticated, setAuthenticated] = React.useState(false);
+const NavBar = ({history, auth: {authenticated, currentUser}, logout, openModal}) => {
+  const handleSignIn = () => openModal('LoginModal');
 
-  const handleSignIn = () => setAuthenticated(true);
+  const handleRegister = () => openModal('RegisterModal');
 
   const handleSignOut = () => {
-    setAuthenticated(false);
+    logout();
     history.push('/');
   }
 
@@ -28,11 +31,20 @@ const NavBar = ({history}) => {
         <Menu.Item as={Link} to='/createEvent'>
           <Button floated="right" positive inverted content="Create Event" />
         </Menu.Item>
-        {authenticated ? <SignedInMenu signOut={handleSignOut} /> : <SignedOutMenu signIn={handleSignIn} />}
+        {authenticated ? <SignedInMenu signOut={handleSignOut} currentUser={currentUser} /> : <SignedOutMenu signIn={handleSignIn} register={handleRegister} />}
       </Container>
     </Menu>
   );
 }
 
+const mapState = (state) => ({
+  auth: state.auth
+})
 
-export default withRouter(NavBar);
+const actions = {
+  logout,
+  openModal
+}
+
+
+export default withRouter(connect(mapState, actions)(NavBar));
