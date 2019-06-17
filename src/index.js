@@ -13,7 +13,6 @@ import ReduxToastr from 'react-redux-toastr';
 
 const rootEl = document.getElementById('root');
 const store = configureStore();
-store.dispatch(loadEvents());
 
 let render = () => {
     ReactDOM.render(
