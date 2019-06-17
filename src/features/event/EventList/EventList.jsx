@@ -4,7 +4,7 @@ import EventListItem from './EventListItem';
 const EventList = ({events, deleteEvent}) => {
   return (
     <div>
-      {events.map(event => <EventListItem key={event.id} event={event} deleteEvent={deleteEvent}/>)}
+      {events && events.map(event => <EventListItem key={event.id} event={event} deleteEvent={deleteEvent}/>)}
     </div>
   );
 }

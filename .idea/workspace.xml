@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f8b8380-7dae-4b87-8828-5d83feb782e1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/reducer/rootReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/reducer/rootReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/store/configureStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/store/configureStore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/event/EventDashboard/EventDashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/event/EventDashboard/EventDashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/event/EventList/EventList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/event/EventList/EventList.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/event/EventList/EventListItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/event/EventList/EventListItem.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/event/eventActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/event/eventActions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,8 +48,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/features/event/EventDashboard/EventDashboard.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+            <state relative-caret-position="308">
+              <caret line="22" column="17" lean-forward="true" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -58,7 +61,19 @@
         <entry file="file://$PROJECT_DIR$/src/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="178">
-              <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/features/event/EventList/EventListItem.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="461">
+              <caret line="30" column="23" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="23" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -67,10 +82,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/features/event/EventList/EventListItem.jsx">
+        <entry file="file://$PROJECT_DIR$/src/features/event/EventList/EventList.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="76" selection-start-line="24" selection-start-column="76" selection-end-line="24" selection-end-column="76" />
+            <state relative-caret-position="102">
+              <caret line="6" selection-start-line="6" selection-end-line="7" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -104,7 +119,6 @@
         <option value="$PROJECT_DIR$/src/features/testarea/testReducer.js" />
         <option value="$PROJECT_DIR$/src/features/event/eventReducer.js" />
         <option value="$PROJECT_DIR$/src/app/common/util/ScrollToTop.jsx" />
-        <option value="$PROJECT_DIR$/src/features/event/EventList/EventList.jsx" />
         <option value="$PROJECT_DIR$/src/features/event/EventDetailed/EventDetailedSidebar.jsx" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/app/common/form/DateInput.jsx" />
@@ -121,9 +135,10 @@
         <option value="$PROJECT_DIR$/src/features/async/asyncReducer.js" />
         <option value="$PROJECT_DIR$/src/app/reducer/rootReducer.js" />
         <option value="$PROJECT_DIR$/src/features/nav/NavBar/NavBar.jsx" />
-        <option value="$PROJECT_DIR$/src/features/event/EventDashboard/EventDashboard.jsx" />
         <option value="$PROJECT_DIR$/src/index.js" />
+        <option value="$PROJECT_DIR$/src/features/event/EventDashboard/EventDashboard.jsx" />
         <option value="$PROJECT_DIR$/src/features/event/EventList/EventListItem.jsx" />
+        <option value="$PROJECT_DIR$/src/features/event/EventList/EventList.jsx" />
       </list>
     </option>
   </component>
@@ -395,18 +410,17 @@
       <updated>1559834703060</updated>
       <workItem from="1559834704647" duration="4376000" />
       <workItem from="1559938546043" duration="28304000" />
-      <workItem from="1560362188407" duration="9341000" />
+      <workItem from="1560362188407" duration="9791000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42021000" />
+    <option name="totallyTimeSpent" value="42471000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2553305" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2553305" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
@@ -422,7 +436,7 @@
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Database Changes" order="10" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32981783" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32981783" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -489,16 +503,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="52" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/event/EventList/EventList.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="28" selection-start-line="3" selection-start-column="28" selection-end-line="3" selection-end-column="28" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -735,20 +739,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/event/EventDashboard/EventDashboard.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="178">
-          <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -757,8 +751,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/features/event/EventList/EventListItem.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="76" selection-start-line="24" selection-start-column="76" selection-end-line="24" selection-end-column="76" />
+        <state relative-caret-position="461">
+          <caret line="30" column="23" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/event/EventDashboard/EventDashboard.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="22" column="17" lean-forward="true" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/event/EventList/EventList.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" selection-start-line="6" selection-end-line="7" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
