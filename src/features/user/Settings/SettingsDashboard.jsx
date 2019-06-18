@@ -8,14 +8,15 @@ import PhotosPage from './PhotosPage';
 import AccountPage from './AccountPage';
 import {changePassword} from '../../auth/authActions';
 import {connect} from 'react-redux';
+import {updateProfile} from '../userActions';
 
-const SettingsDashboard = ({providerId, changePassword}) => {
+const SettingsDashboard = ({providerId, changePassword, profile, updateProfile}) => {
   return (
     <Grid>
       <GridColumn width="12">
         <Switch>
-          <Route path="/settings/basic" component={BasicPage}/>
-          <Route path="/settings/about" component={AboutPage}/>
+          <Route path="/settings/basic" render={() => <BasicPage initialValues={profile} updateProfile={updateProfile}/>} />
+          <Route path="/settings/about" render={() => <AboutPage initialValues={profile} updateProfile={updateProfile}/>} />
           <Route path="/settings/photos" component={PhotosPage}/>
           <Route path="/settings/account" render={() => <AccountPage providerId={providerId} changePassword={changePassword} />}/>
           <Redirect to="/settings/basic"/>
@@ -29,11 +30,13 @@ const SettingsDashboard = ({providerId, changePassword}) => {
 }
 
 const actions = {
-  changePassword
+  changePassword,
+  updateProfile
 }
 
 const mapState = state => ({
-  providerId: state.firebase.auth.providerData[0].providerId
+  providerId: state.firebase.auth.providerData[0].providerId,
+  profile: state.firebase.profile
 })
 
 export default connect(mapState, actions)(SettingsDashboard);

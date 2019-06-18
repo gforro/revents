@@ -45,7 +45,7 @@ const NavBar = ({history, auth, profile, openModal, firebase}) => {
 
 const mapState = (state) => ({
   auth: state.firebase.auth,
-  profile: state.firebase.auth
+  profile: state.firebase.profile
 })
 
 const actions = {
