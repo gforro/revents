@@ -6,7 +6,7 @@ const SelectInput = ({input, type, width, placeholder, multiple, options, meta: 
     <FormField error={touched && !!error}>
       <Select
         value={input.value || null}
-        onChange={(e, data) => {e.persist(); console.log(e); console.log(data); input.onChange(data.value);}}
+        onChange={(e, data) => input.onChange(data.value)}
         placeholder={placeholder}
         options={options}
         multiple={multiple}
