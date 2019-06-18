@@ -71,13 +71,13 @@ class EventForm extends Component {
   }
 
   render() {
-    const {initialValues, history, submitting, invalid, pristine} = this.props;
+    const {initialValues, history, submitting, invalid, pristine, handleSubmit} = this.props;
     return (
       <Grid centered>
         <GridColumn width={10}>
           <Segment>
             <Header sub color="teal" content="Event Details"/>
-            <Form onSubmit={this.props.handleSubmit(this.onHandleSubmit)}>
+            <Form onSubmit={handleSubmit(this.onHandleSubmit)}>
               <Field name="title" component={TextInput} placeholder="Event Title" />
               <Field name="category" component={SelectInput} placeholder="What is your event about?" options={category}/>
               <Field name="description" component={TextArea} placeholder="Tell us about your event" rows="3" />
