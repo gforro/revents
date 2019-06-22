@@ -4,7 +4,7 @@ import {Redirect, Route, Switch} from 'react-router-dom';
 import SettingsNav from './SettingsNav';
 import BasicPage from './BasicPage';
 import AboutPage from './AboutPage';
-import PhotosPage from './PhotosPage';
+import PhotosPage from './Photos/PhotosPage';
 import AccountPage from './AccountPage';
 import {changePassword} from '../../auth/authActions';
 import {connect} from 'react-redux';
