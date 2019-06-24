@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Image, Segment, Header, Divider, Grid, Button, Card, ButtonGroup} from 'semantic-ui-react';
+import React from 'react';
+import {Button, ButtonGroup, Divider, Grid, Header, Segment} from 'semantic-ui-react';
 import DropzoneInput from './DropzoneInput';
 import CropperInput from './CropperInput';
 import {deleteProfileImage, setMainProfileImage, uploadProfileImage} from '../../userActions';
@@ -16,7 +16,6 @@ const PhotosPage = ({uploadProfileImage, deleteProfileImage, setMainProfileImage
   React.useEffect(() =>
     () => {
       files.forEach(file => URL.revokeObjectURL(file.preview));
-      console.log('cleaned up for files', files);
     }, [files]);
 
   const handleUploadImage = async () => {

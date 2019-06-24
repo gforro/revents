@@ -7,22 +7,26 @@ import EventDetailedSidebar from './EventDetailedSidebar';
 import {connect} from 'react-redux';
 
 const EventDetailedPage = ({event}) => {
+  console.log(event);
   return (
-    <Grid>
-      <GridColumn width="10">
-        <EventDetailedHeader event={event}/>
-        <EventDetailedInfo event={event}/>
-        <EventDetailedChat/>
-      </GridColumn>
-      <GridColumn width="6">
-        <EventDetailedSidebar attendees={event.attendees}/>
-      </GridColumn>
-    </Grid>
+    event ? (
+      <Grid>
+        <GridColumn width="10">
+          <EventDetailedHeader event={event}/>
+          <EventDetailedInfo event={event}/>
+          <EventDetailedChat/>
+        </GridColumn>
+        <GridColumn width="6">
+          <EventDetailedSidebar attendees={event.attendees}/>
+        </GridColumn>
+      </Grid>
+    ) : (<></>)
   );
 };
 
 const mapState = (state, {match}) => {
   let event = {};
+  console.log(state.event);
   if (state.events) {
     event = state.events.filter(e => e.id === match.params.id)[0];
   }

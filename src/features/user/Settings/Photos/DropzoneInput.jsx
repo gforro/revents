@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone'
-import {Header, Icon, Image} from 'semantic-ui-react';
+import {Header, Icon} from 'semantic-ui-react';
 
 const DropzoneInput = ({setFiles}) => {
   const onDrop = useCallback(acceptedFiles => {

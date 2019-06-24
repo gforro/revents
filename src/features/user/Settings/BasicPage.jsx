@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Segment, Form, Header, Divider, Button, Label} from 'semantic-ui-react';
+import React from 'react';
+import {Button, Divider, Form, Header, Label, Segment} from 'semantic-ui-react';
 import {Field, reduxForm} from 'redux-form';
 import DateInput from "../../../app/common/form/DateInput";
 import PlaceInput from "../../../app/common/form/PlaceInput";
