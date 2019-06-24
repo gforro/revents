@@ -65,13 +65,12 @@ export const deleteProfileImage = (photo) =>
     const user = firebase.auth().currentUser;
 
     try {
-      const xxx = await firestore.delete({
+      await firestore.delete({
         collection: 'users',
         doc: user.uid,
         subcollections: [{collection: 'photos', doc: photo.id}]
       });
-      const yyy = await firebase.deleteFile(`${user.uid}/user_images/${photo.name}`);
-      console.log('done');
+      await firebase.deleteFile(`${user.uid}/user_images/${photo.name}`);
     } catch (error) {
       console.log(error);
       throw new Error('Image not deleted. Problem when deleting.')
@@ -83,8 +82,7 @@ export const setMainProfileImage = (photo) =>
     const firebase = getFirebase();
 
     try {
-      const xxx = await firebase.updateProfile({photoURL: photo.url});
-      console.log('done');
+      await firebase.updateProfile({photoURL: photo.url});
     } catch (error) {
       console.log(error);
       throw new Error('Error when set photo to main profile.');

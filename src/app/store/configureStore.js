@@ -1,9 +1,9 @@
 import {applyMiddleware, createStore} from 'redux';
 import rootReducer from '../reducer/rootReducer';
-import {composeWithDevTools, devToolsEnhancer} from 'redux-devtools-extension';
+import {composeWithDevTools} from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import {reactReduxFirebase, getFirebase} from 'react-redux-firebase';
-import {reduxFirestore, getFirestore} from 'redux-firestore';
+import {getFirebase, reactReduxFirebase} from 'react-redux-firebase';
+import {getFirestore, reduxFirestore} from 'redux-firestore';
 import firebase from '../config/firebase';
 
 const rrfConfig = {

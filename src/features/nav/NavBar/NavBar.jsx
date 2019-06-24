@@ -37,7 +37,7 @@ const NavBar = ({history, auth, profile, openModal, firebase}) => {
           </Menu.Item>
         </>
         }
-        {authenticated ? <SignedInMenu signOut={handleSignOut} profile={profile} /> : <SignedOutMenu signIn={handleSignIn} register={handleRegister} />}
+        {authenticated ? <SignedInMenu signOut={handleSignOut} profile={profile} auth={auth} /> : <SignedOutMenu signIn={handleSignIn} register={handleRegister} />}
       </Container>
     </Menu>
   );

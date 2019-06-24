@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, ButtonGroup, Card, Header, Image, Segment} from 'semantic-ui-react';
+import {Button, ButtonGroup, Card, Header, Image} from 'semantic-ui-react';
 
 const UserPhotos = ({profile, photos, deleteImage, setMainImage}) => {
   return (

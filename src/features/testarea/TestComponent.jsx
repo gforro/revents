@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {decrementAsync, decrementCounter, incrementAsync, incrementCounter} from './testActions';
+import {decrementAsync, incrementAsync} from './testActions';
 import {Button} from 'semantic-ui-react';
 import TestPlaceInput from './TestPlaceInput';
 import TestMap from './TestMap';
@@ -29,7 +29,7 @@ class TestComponent extends Component {
   };
 
   render() {
-    const {data, incrementCounter, decrementCounter, openModal, incrementAsync, decrementAsync, loading} = this.props;
+    const {data, openModal, incrementAsync, decrementAsync, loading} = this.props;
     return (
       <div>
         <h1>Test Component</h1>
@@ -52,8 +52,6 @@ const mapState = (state) => ({
 });
 
 const actions = {
-  incrementCounter,
-  decrementCounter,
   openModal,
   incrementAsync,
   decrementAsync
