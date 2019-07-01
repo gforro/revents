@@ -2,25 +2,20 @@ import React from 'react';
 import {Grid, GridColumn} from 'semantic-ui-react';
 import EventList from '../EventList/EventList';
 import {connect} from 'react-redux';
-import {deleteEvent} from '../eventActions';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import EventActivity from '../EventActivity/EventActivity';
-import {firestoreConnect} from 'react-redux-firebase';
+import {firestoreConnect, isLoaded} from 'react-redux-firebase';
 
-const EventDashboard = ({events, deleteEvent, loading}) => {
+const EventDashboard = ({events}) => {
 
-  const handleDeleteEvent = (eventId) => {
-    deleteEvent(eventId);
-  }
-
-  if (loading) {
+  if (!isLoaded(events)) {
     return <LoadingComponent inverted={true} />
   }
   else {
     return (
       <Grid>
         <GridColumn width="10">
-          <EventList events={events} deleteEvent={handleDeleteEvent}/>
+          <EventList events={events}/>
         </GridColumn>
         <GridColumn width="6">
           <EventActivity/>
@@ -31,12 +26,7 @@ const EventDashboard = ({events, deleteEvent, loading}) => {
 }
 
 const mapState = state => ({
-  events: state.firestore.ordered.events,
-  loading: state.async.loading
+  events: state.firestore.ordered.events
 });
 
-const actions = {
-  deleteEvent
-};
-
-export default connect(mapState, actions)(firestoreConnect([{collection: 'events'}])(EventDashboard));
+export default connect(mapState)(firestoreConnect([{collection: 'events'}])(EventDashboard));

@@ -2,8 +2,7 @@
 import React from 'react';
 import {Button, Form, Grid, GridColumn, Header, Segment} from 'semantic-ui-react';
 import {connect} from 'react-redux';
-import {createEvent, updateEvent} from '../eventActions';
-import cuid from 'cuid';
+import {cancelToggleEvent, createEvent, updateEvent} from '../eventActions';
 import {Field, reduxForm} from 'redux-form';
 import TextInput from '../../../app/common/form/TextInput';
 import DateInput from '../../../app/common/form/DateInput';
@@ -12,6 +11,9 @@ import SelectInput from '../../../app/common/form/SelectInput';
 import TextArea from '../../../app/common/form/TextArea';
 import PlaceInput from '../../../app/common/form/PlaceInput';
 import {geocodeByAddress, getLatLng} from 'react-places-autocomplete';
+import {withFirestore} from 'react-redux-firebase';
+import {compose} from 'redux';
+import {toastr} from 'react-redux-toastr';
 
 const category = [
   {key: 'drinks', text: 'Drinks', value: 'drinks'},
@@ -34,7 +36,7 @@ const validator = combineValidators({
   date: isRequired('date')
 });
 
-const EventForm = ({initialValues: event, createEvent, updateEvent, history, handleSubmit, submitting, invalid, pristine, change}) => {
+const EventForm = ({initialValues, event, createEvent, updateEvent, history, handleSubmit, submitting, invalid, pristine, change, firestore, match, cancelToggleEvent}) => {
   const [cityLatLng, setCityLatLng] = React.useState({});
   const [venueLatLng, setVenueLatLng] = React.useState({});
 
@@ -52,22 +54,39 @@ const EventForm = ({initialValues: event, createEvent, updateEvent, history, han
       .then(() => change('venue', selectedVenue));
   }
 
-
-  const onHandleSubmit = (data) => {
-    data.venueLatLng = venueLatLng;
-    if (event.id) {
-      updateEvent(data);
-      history.push(`/events/${event.id}`);
-    } else {
-      const newEvent = {
-        ...data,
-        id: cuid(),
-        hostPhotoURL:'/assets/user.png'
+  const onHandleSubmit = async (data) => {
+    try {
+      data.venueLatLng = venueLatLng;
+      if (initialValues.id) {
+        if (Object.keys(data.venueLatLng).length === 0) {
+          data.venueLatLng = event.venueLatLng;
+        }
+        updateEvent(data);
+        history.push(`/events/${initialValues.id}`);
+      } else {
+        const newEvent = createEvent(data);
+        history.push(`/events/${newEvent.id}`);
       }
-      createEvent(newEvent);
-      history.push(`/events/${newEvent.id}`);
+    } catch (error) {
+      console.log(error);
     }
   }
+
+  const handleCancelToggle = (cancelled, eventId) => {
+    const confirmMessage = cancelled ? 'Are You sure to cancel the event?' : 'Event is cancelled. Are You sure to reactivate it?';
+    toastr.confirm(confirmMessage, {
+      onOk: () => {
+        cancelToggleEvent(cancelled, eventId)
+      }
+    })
+  }
+
+  React.useEffect(() => {
+    firestore.setListener(`events/${match.params.id}`);
+    return () => {
+      firestore.unsetListener(`events/${match.params.id}`);
+    }
+  }, [firestore, match]);
 
   return (
     <Grid centered>
@@ -107,7 +126,8 @@ const EventForm = ({initialValues: event, createEvent, updateEvent, history, han
             <Button disabled={submitting || invalid || pristine} positive type="submit">
               Submit
             </Button>
-            <Button type="button" onClick={() => event.id ? history.push(`/events/${event.id}`) : history.push('/events') }>Cancel</Button>
+            <Button type="button" onClick={() => initialValues.id ? history.push(`/events/${initialValues.id}`) : history.push('/events') }>Cancel</Button>
+            <Button onClick={() => handleCancelToggle(!event.cancelled, event.id)} type="button" color={event.cancelled ? 'green' : 'red'} content={event.cancelled ? 'Reactivate Event' : 'Cancel Event'} floated="right"/>
           </Form>
         </Segment>
       </GridColumn>
@@ -116,19 +136,27 @@ const EventForm = ({initialValues: event, createEvent, updateEvent, history, han
 }
 
 
-const mapState = (state, ownProps) => {
-  const eventId = ownProps.match.params.id;
+const mapState = (state, {match}) => {
+  const eventId = match.params.id;
   let event = {};
 
-  if (eventId && state.events.length > 0) {
-    event = state.events.filter(e => e.id === eventId)[0];
+  if (eventId && state.firestore.ordered.events) {
+    event = state.firestore.ordered.events.filter(e => e.id === match.params.id)[0] || {};
   }
-  return { initialValues: event }
+  return {
+    initialValues: event,
+    event
+  }
 }
 
 const actions = {
   createEvent,
-  updateEvent
+  updateEvent,
+  cancelToggleEvent
 }
 
-export default connect(mapState, actions)(reduxForm({form: 'eventForm', validate: validator})(EventForm));
+export default compose(
+  withFirestore,
+  connect(mapState, actions),
+  reduxForm({form: 'eventForm', validate: validator, enableReinitialize: true})
+)(EventForm);
