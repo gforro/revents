@@ -1,9 +1,8 @@
 /*global google*/
 import React, {Component} from 'react';
-import {Form, Button, Segment, Grid, GridColumn, Header} from 'semantic-ui-react';
+import {Button, Form, Grid, GridColumn, Header, Segment} from 'semantic-ui-react';
 import {connect} from 'react-redux';
-import {createEvent, updateEvent} from '../eventActions';
-import cuid from 'cuid';
+import {cancelToggleEvent, createEvent, updateEvent} from '../eventActions';
 import {Field, reduxForm} from 'redux-form';
 import TextInput from '../../../app/common/form/TextInput';
 import TextArea from '../../../app/common/form/TextArea';
@@ -12,6 +11,9 @@ import {combineValidators, composeValidators, hasLengthGreaterThan, isRequired} 
 import DateInput from '../../../app/common/form/DateInput';
 import PlaceInput from '../../../app/common/form/PlaceInput';
 import {geocodeByAddress, getLatLng} from 'react-places-autocomplete';
+import {toastr} from 'react-redux-toastr';
+import {compose} from 'redux';
+import {withFirestore} from 'react-redux-firebase';
 
 const category = [
   {key: 'drinks', text: 'Drinks', value: 'drinks'},
@@ -40,20 +42,39 @@ class EventForm extends Component {
     venueLatLng: {}
   }
 
-  onHandleSubmit = (data) => {
-    data.venueLatLng = this.state.venueLatLng;
-    if (this.props.initialValues.id) {
-      this.props.updateEvent(data);
-      this.props.history.push(`/events/${this.props.initialValues.id}`);
-    } else {
-      const newEvent = {
-        ...data,
-        id: cuid(),
-        hostPhotoURL:'/assets/user.png'
+  componentDidMount() {
+    const {firestore, match} = this.props;
+    firestore.setListener(`events/${match.params.id}`);
+  }
+
+  componentWillUnmount() {
+    const {firestore, match} = this.props;
+    firestore.unsetListener(`events/${match.params.id}`);
+  }
+
+  onHandleSubmit = async (data) => {
+    try {
+      data.venueLatLng = this.state.venueLatLng;
+      if (this.props.initialValues.id) {
+        if (Object.keys(data.venueLatLng).length === 0) {
+          data.venueLatLng = this.props.event.venueLatLng;
+        }
+        this.props.updateEvent(data);
+        this.props.history.push(`/events/${this.props.initialValues.id}`);
+      } else {
+        const newEvent = this.props.createEvent(data);
+        this.props.history.push(`/events/${newEvent.id}`);
       }
-      this.props.createEvent(newEvent);
-      this.props.history.push(`/events/${newEvent.id}`);
+    } catch (error) {
+      console.log(error);
     }
+  }
+
+  handleCancelToggle = (cancelled, eventId) => {
+    const confirmMessage = cancelled ? 'Are You sure to cancel the event?' : 'Event is cancelled. Are You sure to reactivate it?';
+    toastr.confirm(confirmMessage, {
+      onOk: () => this.props.cancelToggleEvent(cancelled, eventId)
+    })
   }
 
   handleCitySelect = (selectedCity) => {
@@ -71,7 +92,7 @@ class EventForm extends Component {
   }
 
   render() {
-    const {initialValues, history, submitting, invalid, pristine, handleSubmit} = this.props;
+    const {initialValues, history, submitting, invalid, pristine, handleSubmit, event} = this.props;
     return (
       <Grid centered>
         <GridColumn width={10}>
@@ -105,6 +126,7 @@ class EventForm extends Component {
                 Submit
               </Button>
               <Button type="button" onClick={() => initialValues.id ? history.push(`/events/${initialValues.id}`) : history.push('/events') }>Cancel</Button>
+              <Button onClick={() => this.handleCancelToggle(!event.cancelled, event.id)} type="button" color={event.cancelled ? 'green' : 'red'} content={event.cancelled ? 'Reactivate Event' : 'Cancel Event'} floated="right"/>
             </Form>
           </Segment>
         </GridColumn>
@@ -113,19 +135,27 @@ class EventForm extends Component {
   }
 }
 
-const mapState = (state, ownProps) => {
-  const eventId = ownProps.match.params.id;
+const mapState = (state, {match}) => {
+  const eventId = match.params.id;
   let event = {};
 
-  if (eventId && state.events.length > 0) {
-    event = state.events.filter(e => e.id === eventId)[0];
+  if (eventId && state.firestore.ordered.events) {
+    event = state.firestore.ordered.events.filter(e => e.id === match.params.id)[0] || {};
   }
-  return { initialValues: event }
+  return {
+    initialValues: event,
+    event
+  }
 }
 
 const actions = {
   createEvent,
-  updateEvent
+  updateEvent,
+  cancelToggleEvent
 }
 
-export default connect(mapState, actions)(reduxForm({form: 'eventForm', validate: validator})(EventForm));
+export default compose(
+  withFirestore,
+  connect(mapState, actions),
+  reduxForm({form: 'eventForm', validate: validator, enableReinitialize: true})
+)(EventForm);

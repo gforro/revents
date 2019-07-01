@@ -2,6 +2,7 @@ import React from 'react';
 import {Item} from 'semantic-ui-react';
 import {Header, Segment} from 'semantic-ui-react';
 import {differenceInYears} from 'date-fns';
+import LazyLoad from 'react-lazyload';
 
 const UserBasics = ({profile: {displayName, dateOfBirth, city, occupation, photoURL }}) => {
   const age = dateOfBirth && differenceInYears(new Date(), dateOfBirth.toDate());
@@ -9,7 +10,10 @@ const UserBasics = ({profile: {displayName, dateOfBirth, city, occupation, photo
     <Segment>
       <Item.Group>
         <Item>
-          <Item.Image avatar size='small' src={photoURL || '/assets/user.png'}/>
+          <LazyLoad placeholder={<Item.Image avatar size='small' src="/assets/user.png" />}>
+            <Item.Image avatar size='small' src={photoURL || '/assets/user.png'}/>
+          </LazyLoad>
+
           <Item.Content verticalAlign='bottom'>
             <Header as='h1'>{displayName}</Header>
             {occupation &&

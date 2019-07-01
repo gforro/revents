@@ -24,7 +24,7 @@ const UserDetails = ({profile: {displayName, occupation, city, createdAt, intere
         <Header icon='smile' content={`About ${displayName}`}/>
         <p>I am a: <strong>{occupation || 'tbn'}</strong></p>
         <p>Originally from <strong>{city || 'tbn'}</strong></p>
-        <p>Member Since: <strong>{format(createdAt.toDate(), 'do MMMM yyyy')}</strong></p>
+        {createdAt && <p>Member Since: <strong>{format(createdAt.toDate(), 'do MMMM yyyy')}</strong></p>}
         <p>{about}</p>
       </Grid.Column>
       <Grid.Column width={6}>
